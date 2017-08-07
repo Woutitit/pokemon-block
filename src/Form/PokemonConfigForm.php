@@ -32,10 +32,10 @@ class PokemonConfigForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, Request $request = NULL) {
     $config = $this->config('pokemon_block.settings');
-    $form['your_message'] = array(
+    $form['amount'] = array(
       '#type' => 'textfield',
-      '#title' => $this->t('Your message'),
-      '#default_value' => $config->get('your_message'),
+      '#title' => $this->t('Amount of pokemons to display'),
+      '#default_value' => $config->get('amount'),
     );
     return parent::buildForm($form, $form_state);
   }
