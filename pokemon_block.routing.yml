@@ -1,0 +1,7 @@
+pokemon_block.content:
+  path: '/pokemon'
+  defaults:
+    _controller: '\Drupal\pokemon_block\Controller\PokemonController::content'
+    _title: 'Pokemon Block'
+  requirements:
+    _permission: 'access content'
