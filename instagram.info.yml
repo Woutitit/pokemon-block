@@ -1,5 +1,5 @@
 name: Instagram
+description: Show pictures of Instagram.
+package: Custom
 core: 8.x
-description: Show pictures of instagram.
-package: IMD
 type: module
