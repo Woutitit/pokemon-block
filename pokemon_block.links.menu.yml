@@ -1,6 +1,6 @@
 pokemon_block.admin:
   title: 'Pokemon block module settings'
-  description: 'Configure pokemon block settings'
+  description: 'Pokemon block settings'
   parent: system.admin_config
-  route_name: pokemon_block.content
+  route_name: pokemon_block.settings
   weight: 100

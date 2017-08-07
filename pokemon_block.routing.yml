@@ -1,3 +1,11 @@
+pokemon_block.settings:
+  path: '/admin/config/pokemon_block'
+  defaults:
+    _form: '\Drupal\pokemon_block\Form\PokemonConfigForm'
+    _title: 'Pokemon block settings'
+  requirements:
+    _permission: 'administer site configuration'
+
 pokemon_block.content:
   path: '/pokemon'
   defaults:
