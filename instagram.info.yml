@@ -1,0 +1,5 @@
+name: Instagram
+core: 8.x
+description: Show pictures of instagram.
+package: IMD
+type: module
