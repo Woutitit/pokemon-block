@@ -1,5 +1,5 @@
 pokemon_block.admin:
-  title: 'Pokemon block module settings'
+  title: 'Pokemon block'
   description: 'Pokemon block settings'
   parent: system.admin_config
   route_name: pokemon_block.settings
