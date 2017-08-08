@@ -49,9 +49,9 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
 
   	$i = 0;
   	
-  	foreach($data['results'] as $pokemon)
+  	foreach($data['results'] as $resource)
   	{
-  		$build['children'][$i] = ['#theme' => 'pokemon_block_item'];
+  		$build['children'][$i] = ['#theme' => 'pokemon_block_item', '#data' => $resource ];
   		$i++;
   	}
 
