@@ -37,7 +37,7 @@ class PokemonConfigForm extends ConfigFormBase
   {
     $config = $this->config('pokemon_block.settings');
 
-    $form['settings'] = [
+    $form['resource'] = [
       '#type' => 'radios',
       '#title' => $this->t('What to show?'),
       '#default_value' => $config->get('resource'),
@@ -58,8 +58,9 @@ class PokemonConfigForm extends ConfigFormBase
   {
     $values = $form_state->getValues();
     $this->config('pokemon_block.settings')
-      ->set('your_message', $values['your_message'])
+      ->set('resource', $values['resource'])
       ->save();
-  }
 
+      parent::submitForm($form, $form_state);
+  }
 }
