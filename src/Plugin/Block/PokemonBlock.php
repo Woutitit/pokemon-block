@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Provides a 'Hello' Block.
@@ -40,9 +41,17 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function build() 
   {
-  	// Foreach pokemon returned return a template?
-  	return array(
-  		'#markup' => var_dump("lol"),
-  		);
+  	$build = array();
+
+  	$response = $this->http_client->get('http://pokeapi.co/api/v2/pokemon/', array('headers' => array('Accept' => 'application/json')));
+  	// Nu dus een template loopen foreach result
+  	$data = Json::decode($response->getBody());
+
+  	foreach($data['results'] as $pokemon)
+  	{
+  		$build['#children'] = array( '#theme' => 'pokemon_block_item');
+  	}
+
+  	return $build;
   }
 }
