@@ -37,7 +37,7 @@ class PokemonConfigForm extends ConfigFormBase
   {
     $config = $this->config('pokemon_block.settings');
 
-    $form['settings']['active'] = [
+    $form['settings'] = [
       '#type' => 'radios',
       '#title' => $this->t('What to show?'),
       '#default_value' => $config->get('resource'),
