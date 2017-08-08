@@ -42,9 +42,9 @@ class PokemonConfigForm extends ConfigFormBase
       '#title' => $this->t('What to show?'),
       '#default_value' => $config->get('resource'),
       '#options' => [
-        0 => $this->t('Berries'), 
-        1 => $this->t('Items'),
-        2 => $this->t('Pokemon'),
+        'berry' => $this->t('Berries'), 
+        'item' => $this->t('Items'),
+        'pokemon' => $this->t('Pokemon'),
       ]
     ];
 
