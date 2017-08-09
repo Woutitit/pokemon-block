@@ -100,21 +100,26 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
 
     for($id = 1; $id <= $count; $id++ ) 
     {
-      $build['children'][$id] = [
-      '#theme' => $this->getChildTemplate($resource_name), 
-      '#data' => $this->fetchChildData($resource_name, $id),
-      ];
+      $response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/{$id}/?limit={count}", ['headers' => ['Accept' => 'application/json']]);
+      $data = Json::decode($response->getBody());
+
+      $build['children'][$id] = $this->buildChild($resource_name, $data);
     }
 
     return $build;
   }
 
+  private function buildChild($resource_name, $data) {
 
-  private function fetchChildData($resource_name, $id)
-  {
-    $response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/{$id}", ['headers' => ['Accept' => 'application/json']]);
+    $child = ['#theme' => $this->getChildTemplate($resource_name)];
 
-    return Json::decode($response->getBody());
+    if($resource_name == 'pokemon')
+    {
+      // We should just return the types array and in twig we'll foreach loop the types
+      $child['#types'] = 'lol';
+    }
+
+    return $child;
   }
 
 
