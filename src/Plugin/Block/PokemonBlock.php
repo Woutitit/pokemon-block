@@ -120,6 +120,7 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
 
   private function getChildTemplate($resource_name)
   {
+    // Nice to have: if resource name has dashes replace it here with underscoreds
     return 'pokemon_block_' . $resource_name;
   }
 }
