@@ -25,7 +25,7 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
 	/**
    	* @var \GuzzleHttp\Client
    	*/
-  private $http_client;
+    private $http_client;
 
   /**
    * @var \Drupal\Core\Config\ConfigFactory
@@ -65,12 +65,12 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   public function blockForm($form, FormStateInterface $form_state) 
   {
     $form['count'] = [
-      '#type' => 'number', 
-      '#title' => $this->t('Amount to display'), 
-      '#default_value' => $this->configuration['count'],
-      ];
+    '#type' => 'number', 
+    '#title' => $this->t('Amount to display'), 
+    '#default_value' => $this->configuration['count'],
+    ];
 
-      return $form;
+    return $form;
   }
 
   /**
@@ -95,31 +95,31 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   {
 
     $build = array();
-
     $resource_name = $this->config_factory->get('pokemon_block.settings')->get('resource');
-    
-    // When in config we change the resource setting. It doesn't update, only after disabling and enabling the block, or after clearing the caches.
-    // But maybe this is normal?
-    // Or maybe if we would have had this in the block form it would change for the block immediatly?
-    // But often you need general settings NOT in the block form, so I guess then you'd also need to clear the caches. So I guess it's normal?
-    $response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/", array('headers' => array('Accept' => 'application/json')));
-    
-    $data = Json::decode($response->getBody());
+    $count = $this->configuration['count'];
 
-    $i = 0;
-
-    foreach($data['results'] as $resource)
+    for($id = 1; $id <= $count; $id++ ) 
     {
-      $response2 = $this->http_client->get($resource["url"], array('headers' => array('Accept' => 'application/json')));
-
-      $data2 = Json::decode($response2->getBody());
-
-      var_dump($data2);
-
-      $build['children'][$i] = ['#theme' => 'pokemon_block_item', '#data' => $resource ];
-      $i++;
+      $build['children'][$id] = [
+      '#theme' => $this->getChildTemplate($resource_name), 
+      '#data' => $this->fetchChildData($resource_name, $id),
+      ];
     }
 
     return $build;
+  }
+
+
+  private function fetchChildData($resource_name, $id)
+  {
+    $response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/{$id}", ['headers' => ['Accept' => 'application/json']]);
+
+    return Json::decode($response->getBody());
+  }
+
+
+  private function getChildTemplate($resource_name)
+  {
+    return 'pokemon_block_' . $resource_name;
   }
 }
