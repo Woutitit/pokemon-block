@@ -100,7 +100,7 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
 
     for($id = 1; $id <= $count; $id++ ) 
     {
-      $response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/{$id}/?limit={count}", ['headers' => ['Accept' => 'application/json']]);
+      $response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/{$id}/?limit={$count}", ['headers' => ['Accept' => 'application/json']]);
       $data = Json::decode($response->getBody());
 
       $build['children'][$id] = $this->buildChild($resource_name, $data);
