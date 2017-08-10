@@ -25,7 +25,7 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
 	/**
    	* @var \GuzzleHttp\Client
    	*/
-    private $http_client;
+   	private $http_client;
 
   /**
    * @var \Drupal\Core\Config\ConfigFactory
@@ -35,28 +35,28 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
 
   public function __construct(array $configuration, $plugin_id, $plugin_definition, Client $http_client, ConfigFactory $config_factory) 
   {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->http_client = $http_client;
-    $this->config_factory = $config_factory;
+  	parent::__construct($configuration, $plugin_id, $plugin_definition);
+  	$this->http_client = $http_client;
+  	$this->config_factory = $config_factory;
   }
 
 
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) 
   {
-    return new static(
-      $configuration, 
-      $plugin_id, $plugin_definition, 
-      $container->get('http_client'), 
-      $container->get('config.factory'));
+  	return new static(
+  		$configuration, 
+  		$plugin_id, $plugin_definition, 
+  		$container->get('http_client'), 
+  		$container->get('config.factory'));
   }
 
     /**
    * {@inheritdoc}
    */
     public function defaultConfiguration() {
-      return [
-      'count' => 5,
-      ];
+    	return [
+    	'count' => 5,
+    	];
     }
 
   /**
@@ -64,13 +64,13 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function blockForm($form, FormStateInterface $form_state) 
   {
-    $form['count'] = [
-    '#type' => 'number', 
-    '#title' => $this->t('Amount to display'), 
-    '#default_value' => $this->configuration['count'],
-    ];
+  	$form['count'] = [
+  	'#type' => 'number', 
+  	'#title' => $this->t('Amount to display'), 
+  	'#default_value' => $this->configuration['count'],
+  	];
 
-    return $form;
+  	return $form;
   }
 
   /**
@@ -78,14 +78,14 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function blockSubmit($form, FormStateInterface $form_state) 
   {
-    if ($form_state->hasAnyErrors()) 
-    {
-      return;
-    }
-    else 
-    {
-      $this->configuration['count'] = $form_state->getValue('count');
-    }
+  	if ($form_state->hasAnyErrors()) 
+  	{
+  		return;
+  	}
+  	else 
+  	{
+  		$this->configuration['count'] = $form_state->getValue('count');
+  	}
   }
 
   /**
@@ -94,38 +94,49 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   public function build() 
   {
 
-    $build = array();
-    $resource_name = $this->config_factory->get('pokemon_block.settings')->get('resource');
-    $count = $this->configuration['count'];
+  	$build = array();
+  	$resource_name = $this->config_factory->get('pokemon_block.settings')->get('resource');
+  	$count = $this->configuration['count'];
 
-    for($id = 1; $id <= $count; $id++ ) 
-    {
-      $response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/{$id}/?limit={$count}", ['headers' => ['Accept' => 'application/json']]);
-      $data = Json::decode($response->getBody());
+  	for($id = 1; $id <= $count; $id++ ) 
+  	{
+  		$response = $this->http_client->get("http://pokeapi.co/api/v2/{$resource_name}/{$id}/?limit={$count}", ['headers' => ['Accept' => 'application/json']]);
+  		$data = Json::decode($response->getBody());
 
-      $build['children'][$id] = $this->buildChild($resource_name, $data);
-    }
+  		$build['children'][$id] = $this->buildChild($resource_name, $data);
+  	}
 
-    return $build;
+  	return $build;
   }
 
   private function buildChild($resource_name, $data) {
 
-    $child = ['#theme' => $this->getChildTemplate($resource_name)];
+  	$child['#theme'] = $this->getChildTemplate($resource_name);
+  	$child["#data"] = $data;
 
-    if($resource_name == 'pokemon')
-    {
-      // We should just return the types array and in twig we'll foreach loop the types
-      $child['#types'] = 'lol';
-    }
+  	// Add specific convenience variables per resource 
+  	if($resource_name === 'berry')
+  	{
 
-    return $child;
+  	} 
+  	else if($resource_name === 'item') 
+  	{
+
+  	} 
+  	else if($resource_name === 'pokemon')
+  	{
+  		$child['#name'] = $data["name"];
+  		$child['#stats'] = $data["stats"][0];
+  		$child['#types'] = $data["types"][0];
+  	}
+
+  	return $child;
   }
 
 
   private function getChildTemplate($resource_name)
   {
     // Nice to have: if resource name has dashes replace it here with underscoreds
-    return 'pokemon_block_' . $resource_name;
+  	return 'pokemon_block_' . $resource_name;
   }
 }

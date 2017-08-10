@@ -1,1 +1,12 @@
-<p>{{ types }}</p>
+<h2>{{ name }}</h2>
+<ul>
+{% for stat in stats %}
+	<li>{{ stat.name }}</li>
+{% endfor %}
+</ul>
+
+<ul>
+{% for type in types %}
+	<li>{{ type.name }}</li>
+{% endfor %}
+</ul>
