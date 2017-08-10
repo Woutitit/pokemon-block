@@ -1,12 +1,18 @@
 <h2>{{ name }}</h2>
+
+<h3>Base Stats</h3>
 <ul>
-{% for stat in stats %}
-	<li>{{ stat.name }}</li>
-{% endfor %}
+	{% for item in stats %}
+	<li>
+		<h4>{{ item.stat.name }}</h4>
+		<p>{{ item.base_stat }}</p>
+	</li>
+	{% endfor %}
 </ul>
 
+<h3>Types</h3>
 <ul>
-{% for type in types %}
-	<li>{{ type.name }}</li>
-{% endfor %}
+	{% for item in types %}
+	<li>{{ item.type.name }}</li>
+	{% endfor %}
 </ul>

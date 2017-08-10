@@ -126,8 +126,8 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   	else if($resource_name === 'pokemon')
   	{
   		$child['#name'] = $data["name"];
-  		$child['#stats'] = $data["stats"][0];
-  		$child['#types'] = $data["types"][0];
+  		$child['#stats'] = $data["stats"];
+  		$child['#types'] = $data["types"];
   	}
 
   	return $child;
