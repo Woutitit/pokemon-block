@@ -117,6 +117,7 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   	// Add specific convenience variables per resource 
   	if($resource_name === 'berry')
   	{
+      // Maybe a default berry image?
       $child['#firmness'] = $data["firmness"]['name'];
       $child['#flavors'] = $data["flavors"];
       $child['#name'] = $data["name"];
@@ -124,9 +125,15 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   	} 
   	else if($resource_name === 'item') 
   	{
+      // Maybe a sprite image?
+      $child['#category'] = $data['category']['name'];
+      $child['#cost'] = $data['cost'];
+      $child['#effect_entries'] = $data['effect_entries'];
+      $child['#name'] = $data['name'];
   	} 
   	else if($resource_name === 'pokemon')
   	{
+      // Maybe a sprite image?
   		$child['#name'] = $data["name"];
   		$child['#stats'] = $data["stats"];
   		$child['#types'] = $data["types"];

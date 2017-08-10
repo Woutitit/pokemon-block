@@ -1,1 +1,15 @@
-<p>{{ data.name }}</p>
+<h2>{{ name }}</h2>
+
+<h3>Cost</h3>
+<p>{{ cost }}</p>
+
+<h3>Category</h3>
+<p>{{ category }}</p>
+
+
+<h3>Effects</h3>
+<ul>
+	{% for item in effect_entries %}
+		<li>{{ item.short_effect }}</li>
+	{% endfor %}
+</ul>

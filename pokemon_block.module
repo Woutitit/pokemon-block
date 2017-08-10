@@ -6,10 +6,10 @@
 function pokemon_block_theme($existing, $type, $theme, $path) {
 	return [
     	'pokemon_block_berry' => [
-    		'variables' => ['data' => NULL, 'name' => NULL, 'firmness' => NULL, 'flavors' => NULL, 'name' => NULL, 'natural_gift_power' => NULL]
+    		'variables' => ['data' => NULL, 'firmness' => NULL, 'flavors' => NULL, 'name' => NULL, 'natural_gift_power' => NULL]
     	],
     	'pokemon_block_item' => [
-    		'variables' => ['data' => NULL]
+    		'variables' => ['data' => NULL, 'category' => NULL, 'cost' => NULL, 'effect_entries' => NULL, 'name' => NULL]
     	],
     	'pokemon_block_pokemon' => [
     		'variables' => ['data' => NULL, 'name' => NULL, 'stats' => NULL, 'types' => NULL]
