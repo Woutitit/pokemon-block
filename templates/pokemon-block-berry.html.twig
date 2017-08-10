@@ -1,1 +1,15 @@
-<p>{{ data.name }}</p>
+<h2>{{ name }}</h2>
+
+<h3>Natural gift power</h3>
+<p>{{ natural_gift_power }}</p>
+
+<h3>Firmness</h3>
+<p>{{ firmness }}</p>
+
+
+<h3>Flavours</h3>
+<ul>
+	{% for item in flavors %}
+	<li>{{ item.flavor.name}}</li>
+	{% endfor %}
+</ul>

@@ -117,11 +117,13 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   	// Add specific convenience variables per resource 
   	if($resource_name === 'berry')
   	{
-
+      $child['#firmness'] = $data["firmness"]['name'];
+      $child['#flavors'] = $data["flavors"];
+      $child['#name'] = $data["name"];
+      $child['#natural_gift_power'] = $data["natural_gift_power"];
   	} 
   	else if($resource_name === 'item') 
   	{
-
   	} 
   	else if($resource_name === 'pokemon')
   	{
