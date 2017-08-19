@@ -1,18 +1,30 @@
-<h2>{{ name }}</h2>
-
-<h3>Base Stats</h3>
-<ul>
-	{% for item in stats %}
-	<li>
-		<h4>{{ item.stat.name }}</h4>
-		<p>{{ item.base_stat }}</p>
-	</li>
-	{% endfor %}
-</ul>
-
-<h3>Types</h3>
-<ul>
-	{% for item in types %}
-	<li>{{ item.type.name }}</li>
-	{% endfor %}
-</ul>
+<table>
+	<tr>
+		<th>Attribute</th>
+		<th>Data</th> 
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td>{{ name }}</td>
+	</tr>
+	<tr>
+		<td>Base Stats</td>
+		<td><ul>
+			{% for item in stats %}
+			<li><b>{{ item.stat.name }}</b>: {{ item.base_stat }}</p>
+			</li>
+			{% endfor %}
+		</ul>
+	</td> 
+</tr>
+<tr>
+	<td>Types</td>
+		<td>
+			<ul>
+				{% for item in types %}
+				<li>{{ item.type.name }}</li>
+				{% endfor %}
+			</ul>
+		</td> 
+	</tr>
+</table>
