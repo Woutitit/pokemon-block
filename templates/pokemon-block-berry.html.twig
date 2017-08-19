@@ -1,15 +1,30 @@
-<h2>{{ name }}</h2>
+<table>
+	<tr>
+		<th>Attribute</th>
+		<th>Data</th> 
+	</tr>
+	<tr>
+	<td>Name</td>
+	<td>{{ name }}</td>
+	</tr>
+	<tr>
+		<td>Natural gift power</td>
+		<td>{{ natural_gift_power }}</td> 
+	</tr>
+	<tr>
+		<td>Firmness</td>
+		<td>{{ firmness }}</td> 
+	</tr>
+	<tr>
+		<td>Flavours</td>
+		<td>
+			<ul>
+				{% for item in flavors %}
+				<li>{{ item.flavor.name}}</li>
+				{% endfor %}
+			</ul>
+		</td> 
+	</tr>
+</table>
 
-<h3>Natural gift power</h3>
-<p>{{ natural_gift_power }}</p>
 
-<h3>Firmness</h3>
-<p>{{ firmness }}</p>
-
-
-<h3>Flavours</h3>
-<ul>
-	{% for item in flavors %}
-	<li>{{ item.flavor.name}}</li>
-	{% endfor %}
-</ul>
