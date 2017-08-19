@@ -1,15 +1,28 @@
-<h2>{{ name }}</h2>
-
-<h3>Cost</h3>
-<p>{{ cost }}</p>
-
-<h3>Category</h3>
-<p>{{ category }}</p>
-
-
-<h3>Effects</h3>
-<ul>
-	{% for item in effect_entries %}
-		<li>{{ item.short_effect }}</li>
-	{% endfor %}
-</ul>
+<table>
+	<tr>
+		<th>Attribute</th>
+		<th>Data</th> 
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td>{{ name }}</td>
+	</tr>
+	<tr>
+		<td>Cost</td>
+		<td>{{ cost }}</td> 
+	</tr>
+	<tr>
+		<td>Category</td>
+		<td>{{ category }}</td> 
+	</tr>
+	<tr>
+		<td>Effects</td>
+		<td>
+			<ul>
+				{% for item in effect_entries %}
+				<li>{{ item.short_effect }}</li>
+				{% endfor %}
+			</ul>
+		</td> 
+	</tr>
+</table>
