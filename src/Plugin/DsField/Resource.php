@@ -76,7 +76,7 @@ class Resource extends DsFieldBase {
         $data = Json::decode($response->getBody());
 
         foreach ($data["results"] as $berry)
-          if($berry["name"] === strtolower(str_replace(' ', '-', $title))) 
+          if($berry["name"] === strtolower($title)) 
             return true;
 
           return false;
