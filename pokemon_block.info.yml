@@ -1,8 +1,6 @@
 name: Pokemon block
 description: Show information about pokemons.
-package: Custom
 
 core: 8.x
 type: module
 
-configure: pokemon_block.admin_settings

@@ -14,71 +14,66 @@ use Drupal\Component\Serialization\Json;
  *   provider = "node"
  * )
  */
-class Resource extends DsFieldBase {
+class Resource extends DsFieldBase 
+{
+  private $client;
+
+  private $title;
+
 
   /**
    * {@inheritdoc}
    */
-  public function build() {
-    /* @var $node \Drupal\node\NodeInterface */
-    $node = $this->entity();
-    $title = $node->getTitle();
+  public function build() 
+  {
+    $this->title = $this->entity()->getTitle();
+    $this->client = \Drupal::httpClient();
 
-    $client = \Drupal::httpClient();
-
-    if($this->isPokemon($client, $title))
+    if($this->isPokemon())
     {
-      return ['#markup' => '<b>Type: </b>Pokemon.'];
+      return ['#markup' => '<b>Type: </b>Pokemon'];
     } 
-    else if ($this->isItem($client, $title))
+    else if ($this->isItem())
     {
-      return ['#markup' => '<b>Type: </b>Item.'];
+      return ['#markup' => '<b>Type: </b>Item'];
     } 
-    else if ($this->isBerry($client, $title)) 
+    else if ($this->isBerry()) 
     {
-      return ['#markup' => '<b>Type: </b>Berry.'];
+      return ['#markup' => '<b>Type: </b>Berry'];
     }
     else 
     {
       return ['#markup' => '<b>Type: </b>This is not a pokemon, not an item and not a berry.'];
-    }
-
-    
+    } 
   }
 
-  private function isPokemon($client, $title) 
+
+  private function isPokemon() 
   {
-    $response = $client->get("http://pokeapi.co/api/v2/pokemon/?limit=721", ['headers' => ['Accept' => 'application/json']]);
+    return $this->matchTitle($this->client->get("http://pokeapi.co/api/v2/pokemon/?limit=721", ['headers' => ['Accept' => 'application/json']])); 
+  }
+ 
+
+  private function isItem() 
+  {
+    return $this->matchTitle($this->client->get("http://pokeapi.co/api/v2/item/?limit=748", ['headers' => ['Accept' => 'application/json']]));
+   }
+
+
+  private function isBerry($client, $title) 
+  {
+      return $this->matchTitle($this->client->get("http://pokeapi.co/api/v2/berry/?limit=63", ['headers' => ['Accept' => 'application/json']]));
+  }
+
+
+  private function matchTitle($response) 
+  {
     $data = Json::decode($response->getBody());
 
-    foreach ($data["results"] as $pokemon)
-      if($pokemon["name"] === strtolower($title)) 
-        return true;
-
-      return false;  
-    }
-    
-   private function isItem($client, $title) 
-  {
-      $response = $client->get("http://pokeapi.co/api/v2/item/?limit=748", ['headers' => ['Accept' => 'application/json']]);
-      $data = Json::decode($response->getBody());
-
-      foreach ($data["results"] as $item)
-        if($item["name"] === strtolower(str_replace(' ', '-', $title))) 
+    foreach ($data["results"] as $item)
+        if($item["name"] === strtolower(str_replace(' ', '-', $this->title))) 
           return true;
 
         return false;
-      }
-
-    private function isBerry($client, $title) 
-    {
-        $response = $client->get("http://pokeapi.co/api/v2/berry/?limit=63", ['headers' => ['Accept' => 'application/json']]);
-        $data = Json::decode($response->getBody());
-
-        foreach ($data["results"] as $berry)
-          if($berry["name"] === strtolower($title)) 
-            return true;
-
-          return false;
-    }
+  }
 }

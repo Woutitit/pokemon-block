@@ -109,8 +109,8 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   	return $build;
   }
 
-  private function buildChild($resource_name, $data) {
-
+  private function buildChild($resource_name, $data) 
+  {
   	$child['#theme'] = $this->getChildTemplate($resource_name);
   	$child["#data"] = $data;
 
@@ -143,8 +143,7 @@ class PokemonBlock extends BlockBase implements ContainerFactoryPluginInterface
   }
 
 
-  private function getChildTemplate($resource_name)
-  {
+  private function getChildTemplate($resource_name) {
     // Nice to have: if resource name has dashes replace it here with underscoreds
   	return 'pokemon_block_' . $resource_name;
   }
