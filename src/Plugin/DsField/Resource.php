@@ -60,7 +60,7 @@ class Resource extends DsFieldBase
    }
 
 
-  private function isBerry($client, $title) 
+  private function isBerry() 
   {
       return $this->matchTitle($this->client->get("http://pokeapi.co/api/v2/berry/?limit=63", ['headers' => ['Accept' => 'application/json']]));
   }
